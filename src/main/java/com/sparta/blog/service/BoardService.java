@@ -44,10 +44,16 @@ public class BoardService {
     public ResponseEntity<String> updateBoard(Long id, BoardRequestDto boardRequestDto, User user) {
         Board board = findBoard(id);
         UserRoleEnum role = user.getRole();
-        if (!board.getUser().getUsername().equals(user.getUsername()) || !(role == UserRoleEnum.ADMIN)) {
-            return ResponseEntity.status(400).body("상태코드 : " + HttpStatus.BAD_REQUEST.value()  + " 메세지 : 선생님 게시물이 아닙니다.");}
-        board.update(boardRequestDto, user);
-        return ResponseEntity.status(200).body("상태코드 : " + HttpStatus.OK.value() + " 메세지 : 게시물 수정 성공");
+
+        if(role == UserRoleEnum.ADMIN) {
+            board.update(boardRequestDto, user);
+            return ResponseEntity.status(200).body("상태코드 : " + HttpStatus.OK.value() + " 메세지 : 관리자 권한으로 게시물 수정 성공");
+        }else if (!board.getUser().getUsername().equals(user.getUsername())) {
+            return ResponseEntity.status(400).body("상태코드 : " + HttpStatus.BAD_REQUEST.value()  + " 메세지 : 선생님 게시물이 아닙니다.");
+        } else{
+            board.update(boardRequestDto, user);
+            return ResponseEntity.status(200).body("상태코드 : " + HttpStatus.OK.value() + " 메세지 : 게시물 수정 성공");
+        }
     }
 
     // 삭제
@@ -55,12 +61,16 @@ public class BoardService {
         Board board = findBoard(id);
         UserRoleEnum role = user.getRole();
 
-        if(!board.getUser().getUsername().equals(user.getUsername()) ) {
-            return ResponseEntity.status(400).body("상태코드 : " + HttpStatus.BAD_REQUEST.value() + " 메세지 : 선생님 게시물이 아닙니다.");}
+        if (role == UserRoleEnum.ADMIN) {
+            boardRepository.delete(board);
+            return ResponseEntity.status(200).body("상태코드 : " + HttpStatus.OK.value() + " 메세지 : 관리자 권한으로 게시물 삭제 성공");
+        } else if(!board.getUser().getUsername().equals(user.getUsername())) {
+            return ResponseEntity.status(400).body("상태코드 : " + HttpStatus.BAD_REQUEST.value() + " 메세지 : 선생님 게시물이 아닙니다.");
+        } else {
+            boardRepository.delete(board);
+            return ResponseEntity.status(200).body("상태코드 : " + HttpStatus.OK.value() + " 메세지 : 게시물 삭제 성공");
+        }
 
-
-        boardRepository.delete(board);
-        return ResponseEntity.status(200).body("상태코드 : " + HttpStatus.OK.value() + " 메세지 : 게시물 삭제 성공");
     }
 
     // DB에서 찾기
