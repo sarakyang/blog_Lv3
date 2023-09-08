@@ -1,5 +1,6 @@
 package com.sparta.blog.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.blog.dto.CommentRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,16 +13,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table (name = "comment")
 public class Comment extends Timestamped {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "contents", nullable = false, length = 500)
     private String contents;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

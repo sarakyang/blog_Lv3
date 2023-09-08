@@ -4,12 +4,11 @@ import com.sparta.blog.dto.BoardRequestDto;
 import com.sparta.blog.dto.BoardResponseDto;
 import com.sparta.blog.security.UserDetailsImpl;
 import com.sparta.blog.service.BoardService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -23,7 +22,7 @@ public class BoardController {
 
     //전체 게시물 조회
     @GetMapping("/board")
-    public List<BoardResponseDto> getBoard() {
+    public Map<Long, BoardResponseDto> getBoard() {
         return boardService.getBoard();
     }
 

@@ -32,13 +32,6 @@ public class CommentService {
         return new CommentResponseDto(comment);
     }
 
-
-    // 게시물 id로 조회
-    public BoardResponseDto getCommentyId(Long id) {
-        Board board = boardRepository.findBoardById(id).orElseThrow(() -> new RuntimeException("게시물이 존재하지 않습니다"));
-        return new BoardResponseDto(board);
-    }
-
     // 수정
     @Transactional
     public ResponseEntity<String> updateComment(Long id, CommentRequestDto commentRequestDto, User user) {
