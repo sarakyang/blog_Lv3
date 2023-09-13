@@ -20,6 +20,9 @@ public class Board extends Timestamped{
     @Column(name = "title")
     private String title;
 
+    @Column(name = "Good_num")
+    private int Good_num = 0;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

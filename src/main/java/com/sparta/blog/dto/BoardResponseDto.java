@@ -20,6 +20,7 @@ public class BoardResponseDto {
     private String contents;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    private int good_num;
 
     private List<Comment> comments;
 
@@ -31,6 +32,7 @@ public class BoardResponseDto {
         this.createdAt = board.getCreatedAt();
         this.modifiedAt = board.getModifiedAt();
         this.username = board.getUser().getUsername();
+        this.good_num = board.getGood_num();
     }
 
     public BoardResponseDto(Board board1, List<Comment> comments) {
@@ -40,6 +42,7 @@ public class BoardResponseDto {
         this.createdAt = board1.getCreatedAt();
         this.modifiedAt = board1.getModifiedAt();
         this.username = board1.getUser().getUsername();
+        this.good_num = board1.getGood_num();
         this.comments = comments;
     }
 }

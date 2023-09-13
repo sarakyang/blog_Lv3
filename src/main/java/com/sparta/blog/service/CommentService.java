@@ -1,6 +1,5 @@
 package com.sparta.blog.service;
 
-import com.sparta.blog.dto.BoardResponseDto;
 import com.sparta.blog.dto.CommentRequestDto;
 import com.sparta.blog.dto.CommentResponseDto;
 import com.sparta.blog.entity.Board;
@@ -67,11 +66,11 @@ public class CommentService {
     }
 
 
-    private Board findBoard(Long id) {
+    public Board findBoard(Long id) {
         return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 게시글이 없습니다."));
     }
 
-    private Comment findComment(Long id) {
+    public Comment findComment(Long id) {
         return commentRepository.findById(id).orElseThrow(() ->new IllegalArgumentException("선택한 댓글이 없습니다."));
     }
 }

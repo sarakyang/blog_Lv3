@@ -21,6 +21,9 @@ public class Comment extends Timestamped {
     @Column(name = "contents", nullable = false, length = 500)
     private String contents;
 
+    @Column(name = "Good_num")
+    private int Good_num = 0;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)

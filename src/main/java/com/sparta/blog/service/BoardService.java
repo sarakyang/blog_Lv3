@@ -33,13 +33,6 @@ public class BoardService {
         this.commentRepository = commentRepository;
     }
 
-
-    // 무슨 직렬화 어쩌구 저쩌구 그냥 프시록에서는 Json으로 반환하지 못하는 값을 반환하게 만들어줌,
-    //spring.jackson.serialization.fail-on-empty-beans=false
-
-    //원하는 값을 찾아야하는데 너무 싫다.
-
-
     // 전체 조회
     public Map<Long, BoardResponseDto> getBoard() {
 
@@ -75,11 +68,14 @@ public class BoardService {
         if(role == UserRoleEnum.ADMIN) {
             board.update(boardRequestDto, user);
             return ResponseEntity.status(200).body("상태코드 : " + HttpStatus.OK.value() + " 메세지 : 관리자 권한으로 게시물 수정 성공");
+
         }else if (!board.getUser().getUsername().equals(user.getUsername())) {
             return ResponseEntity.status(400).body("상태코드 : " + HttpStatus.BAD_REQUEST.value()  + " 메세지 : 당신의 게시물이 아닙니다.");
-        } else{
+
+        } else {
             board.update(boardRequestDto, user);
             return ResponseEntity.status(200).body("상태코드 : " + HttpStatus.OK.value() + " 메세지 : 게시물 수정 성공");
+
         }
     }
 

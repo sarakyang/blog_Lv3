@@ -67,7 +67,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setStatus(401);
         response.getWriter().write("상태코드 : " + response.getStatus() +", 메세지 : " + errorMessage);
 
-
     }
 
 }
